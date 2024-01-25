@@ -1,0 +1,20 @@
+{
+  "name": "atomic-deployment-for-js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.46.2",
+    "@slidev/theme-default": "latest",
+    "slidev-theme-the-unnamed": "^0.0.15"
+  },
+  "devDependencies": {
+    "@iconify-json/logos": "^1.1.42",
+    "@iconify-json/twemoji": "^1.1.15",
+    "@iconify-json/uil": "^1.1.8"
+  }
+}

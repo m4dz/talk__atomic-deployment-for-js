@@ -13,35 +13,42 @@ info: |
 author: m4dz <m@m4dz.net>
 
 theme: the-unnamed
-highlighter: shikiji
-lineNumbers: false
+highlighter: shiki
+lineNumbers: true
+transition: slide-left
+
+monaco: false
 drawings:
   enabled: false
-transition: slide-left
 
 themeConfig:
   aboutme-background: linear-gradient(138deg, rgba(22,28,44,1) 65%, rgba(80,0,72,1) 100%)
   aboutme-color: white
+
 layout: cover
-background: https://source.unsplash.com/vk074XaA70w/1920x1080
+background: https://wallpapercave.com/wp/wp8726590.jpg
 ---
 
 # Atomic Deployment for **(J|T)S** Hipsters
 
 **by [m4dz](https://m4dz.net)** <br>
-![](https://www.devopsjsconf.com/img/favicon.png) DevOps.js Conference - Feb. 15-16, 2024
+![](https://cdn.jsdelivr.net/gh/lyonjs/lyonjs.github.com/graphics/logo/lyon-js.svg) [LyonJS Meetup - Jun. 12, 2024](https://www.meetup.com/lyonjs/events/301132346/)
 
 <style>
+p {
+  line-height: 1.85 !important;
+}
 img {
-  height: 0.75em;
+  height: 1.5em;
   display: inline-block;
-  margin-top: -0.2em;
+  margin-top: -0.35em;
+  margin-left: -0.15em;
 }
 </style>
 
 ---
 
-<h1 v-click>
+<h1 v-click="1">
   <logos-netlify-icon /> <strong>Netlify</strong> killer feature!
 </h1>
 
@@ -50,35 +57,21 @@ img {
 - **Atomic deployment** - Make updates available only when they are complete and totally in place.
 - **Immutable deployment** - Guarantee the integrity of previous deploys by insulating them from future actions.
 
-<div class="flex items-center gap-1 mt-6xl">
+<div v-click="1" class="notes-ln">
   <uil-link-alt /> https://www.netlify.com/blog/2021/02/23/terminology-explained-atomic-and-immutable-deploys/
 </div>
 
 ---
-layout: image-right
-image: https://source.unsplash.com/ozSc1O0zGkM/1920x1080
+layout: center
 ---
 
 # The ~~Hipster~~ **DevOps** Way
 
-- Atomic/Immutable Deployment
-- Any Hosting Provider
-- Simple DX
-
----
-layout: image-right
-image: https://source.unsplash.com/9DRX_cW48RQ/1920x1080
----
-
-# Expected **Features**
-
 <v-clicks>
 
-- <uil-setting /> Configurable
-- <uil-server /> Vanilla Hosting Compatible
-- <uil-cloud-computing /> Integrated Micro CI
-- <uil-stopwatch-slash /> No (minimal) Down on Deploy
-- <uil-cloud-upload /> Auto-publishable
+- Atomic/Immutable Deployment
+- Any Hosting Provider
+- Easy DX <code v-click="4">git push &lt;origin></code>
 
 </v-clicks>
 
@@ -97,6 +90,26 @@ social3:
 ---
 
 ---
+layout: image-right
+image: https://images.pexels.com/photos/1524336/pexels-photo-1524336.jpeg?auto=compressw=960&h=1080&dpr=1
+class: icons
+---
+
+# Expected **Features**
+
+<v-clicks>
+
+- <uil-file-slash /> Convention-over-Configuration
+- <uil-setting /> Extendable 
+- <uil-server /> Vanilla Hosting Compatible
+- <uil-cloud-computing /> Integrated Micro CI
+- <uil-cloud-upload /> Auto-publishable
+- <uil-stopwatch-slash /> No (minimal) Down on Deploy
+- <uil-bug /> Bug-free
+
+</v-clicks>
+
+---
 layout: center
 ---
 
@@ -104,19 +117,19 @@ layout: center
 
 ---
 layout: image-right
-image: https://source.unsplash.com/c3tNiAb098I/1920x1080
+image: https://nextcloud.alwaysdata.org/index.php/s/qjgLNzo3a9GZzMG/download/IMG_7107.jpg
 ---
 
 # Our Premises
 
 <p class="text-sm">
-(for this talk)
+(for demo's sake)
 </p>
 
 <v-clicks>
 
 - Working on the server: Container, VPS…
-- Web Hosting Unix (system-)Account: `www`
+- Web Hosting Unix (system-)Account <br><span class="text-sm">(e.g `www`)</span>
 - SSH Remote Access
 - No WebHooks<br><span class="text-sm">(let's talk about'em in conclusion)</span>
 
@@ -136,19 +149,24 @@ Git basics
 
 **[SSH]** `www@container`
 
-```sh {1|3-4|6-7|all} {lines:false}
+````md magic-move {lines:false}
+```sh
 $ cd /var
-
+```
+```sh
 $ ls -l
-drwxr-xr-x   2 www  users  www
-
+drwxr-xr-x   2 www:users  www
+```
+```sh
 $ git init --bare repo
 Initialized empty Git repository in /var/repo/
-
-$ ls -l
-drwxr-xr-x   9 www  users  repo
-drwxr-xr-x   2 www  users  www
 ```
+```sh
+$ ls -l
+drwxr-xr-x   9 www:users  repo
+drwxr-xr-x   2 www:users  www
+```
+````
 
 ---
 
@@ -156,9 +174,14 @@ drwxr-xr-x   2 www  users  www
 
 **[local]** `~`
 
-```sh {1|3|3-12|all} {lines:false}
+````md magic-move {lines:false}
+```sh
 $ cd Projects
-
+```
+```sh
+$ npm create vite@latest -- --template vue
+```
+```sh
 $ npm create vite@latest -- --template vue
 ✔ Project name: … my-app
 
@@ -169,9 +192,11 @@ Done. Now run:
   cd my-app
   npm install
   npm run dev
-  
+```
+```sh
 $ cd my-app
 ```
+````
 
 ---
 
@@ -179,44 +204,45 @@ $ cd my-app
 
 **[local]** `~/Projects/my-app`
 
-```sh {1-2|3-8|11|13-16} {lines:false}
+````md magic-move lines:false}
+```sh
+$ git init
+```
+```sh
 $ git init
 Initialized empty Git repository in ~/Projects/my-app
-
+```
+```sh
 $ git add .
-
+```
+```sh
+$ git commit -m "Initial commit"
+```
+```sh
 $ git commit -m "Initial commit"
 [main (root-commit) dcef040] Initial commit
  12 files changed, 228 insertions(+)
  ...
-
+```
+```sh
+$ git remote add
+```
+```sh
+$ git remote add deploy
+```
+```sh
 $ git remote add deploy ssh://www@container:/var/repo
-
+```
+```sh
+$ git push deploy main
+```
+```sh
 $ git push deploy main
 ...
 To container:/var/repo
  * [new branch]      main -> main
 ```
-
----
-
-# Step 4: Configure
-
-**[SSH]** `/var/repo`
-
-```sh {1-6|8|8-11} {lines:false}
-$ git config --local --list
-core.repositoryformatversion=0
-core.filemode=true
-core.bare=true
-core.ignorecase=true
-core.precomposeunicode=true
-
-$ git config --local dirs.build dist
-
-$ git config --local --get dirs.build
-dist
-```
+````
 
 ---
 layout: section
@@ -230,21 +256,28 @@ What happens in the container, stays in the container.
 
 ---
 layout: iframe-left
-url: https://githooks.com/
+url: https://githooks.com/#what-are-git-hooks
 ---
 
-# Git Hooks
+# <uil-comment-info /> Git Hooks
 
 > These hook scripts are only limited by a developer's imagination.
 
-```txt {all|6}
+````md magic-move {lines:false}
+```txt
 Some example hook scripts include:
 
-- pre-commit: Check the commit message for spelling errors.
-- pre-receive: Enforce project coding standards.
-- post-commit: Email/SMS team members of a new commit.
+- pre-commit:   Check the commit message for
+                spelling errors.
+- pre-receive:  Enforce project coding standards.
+- post-commit:  Email/SMS team members of a new
+                commit.
 - post-receive: Push the code to production.
 ```
+```txt
+- post-receive: Push the code to production.
+```
+````
 
 <style>
 blockquote {
@@ -262,102 +295,529 @@ blockquote {
 <div class="my-4xl" v-click>
 
 - Reads **lines** from `/dev/stdin`
-- Automated process → `/bin/bash`
+- Automated process → `#!/usr/bin/env <interpreter>`
 
 </div>
 
 <v-click>
 
-```sh {lines:false}
+````md magic-move {lines:false}
+```sh
 $ pwd
 /var/repo
-
+```
+```sh
 $ touch hooks/post-receive
-
+```
+```sh
 $ chmod +x hooks/post-receive
 ```
+````
 
 </v-click>
+
+---
+layout: center
+---
+
+![](https://nodejs.org/static/logos/jsIconGreen.svg) *vs* ![](https://deno.news/deno-logo.svg)
+
+<style>
+em {
+  @apply text-3xl;
+  @apply relative;
+  @apply inline-block;
+  @apply z-1;
+  color: var(--slidev-theme-center-headingColor);
+}
+
+em::before {
+  background: var(--slidev-theme-center-headingBg);
+  box-shadow: var(--slidev-theme-header-shadow);
+  content: " ";
+  display: block;
+  position: absolute;
+  width: calc(100%);
+  height: calc(100%);
+  margin-top: 0.1em;
+  margin-left: -0.25em;
+  padding: 0 1.35rem;
+  z-index: -1;
+  transform: rotate(-1deg);
+}
+
+img {
+  display: inline-block;
+  height: 128px;
+  margin: 2rem;
+}
+</style>
+
+---
+layout: two-cols
+---
+
+# ![](https://nodejs.org/static/logos/jsIconGreen.svg) Node.js
+
+- Flexible
+- Large ecosystem
+- Frontend languages compliant
+- Easy to extend
+
+
+::right::
+
+# ![](https://deno.news/deno-logo.svg) <twemoji-prohibited v-click="1" /> Deno
+
+- Native TS support
+- Secure by Design
+- Auto-bootstrapped
+- Packages from CDNs
+
+<p v-click="1"> 
+
+<uil-image-broken /> No support for [Nodegit](https://www.npmjs.com/package/nodegit) <br><span class="text-sm">(f*ck you Gyp)</span>
+
+</p>
+
+<style>
+h1 {
+  --img-size: 4rem;
+  --gap-size: 0.5rem;
+
+  @apply !flex items-center;
+  @apply w-fit;
+  margin-left: calc(var(--img-size) + var(--gap-size) * 4);
+
+  .slidev-icon {
+    position: absolute;
+    margin-left: -calc(var(--img-size) * -1 - var(--gap-size) * 4);
+    left: var(--gap-size);
+    top: 50%;
+    transform: translate(calc(var(--img-size) * -1 - var(--gap-size) * 4), -50%);
+    width: var(--img-size);
+    height: var(--img-size);
+  }
+
+  img {
+    width: var(--img-size);
+    margin-left: calc(var(--img-size) * -1 - var(--gap-size) * 4);
+    margin-right: calc(var(--gap-size) * 4);
+  }
+}
+
+.slidev-icon {
+  @apply mr-1.5;
+}
+</style>
 
 ---
 
 # Initialize
 
-```bash
-#!/bin/bash
+````md magic-move
+```js
+#!/usr/bin/env node
+const readline = require("readline");
 
-while read oldrev newrev ref
-do
-	echo "Working on branch ${ref}"
-done
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false,
+});
+
+rl.on("line", (line) => {
+    const [oldRev, newRev, ref] = line.split(" ");
+    console.log(`Working on branch ${ref}`);
+});
+```
+```js
+#!/usr/bin/env node
+const readline = require("readline");
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false,
+});
+
+rl.on("line", (line) => {
+  (async () => {
+    const [oldRev, newRev, ref] = line.split(" ");
+    console.log(`Working on branch ${ref}`);
+  })();
+});
+```
+````
+
+---
+
+# Setup environment: Git
+
+```js {1-3,9}
+const Git = require("nodegit");
+
+const repoPath = path.resolve(".");
+
+/* ... */
+
+(async () => {
+  const [oldRev, newRev, ref] = line.split(" ");
+  const repo = await Git.Repository.openBare(repoPath);
+
+  console.log(`Working on branch ${ref}`);
+})();
+```
+
+<div class="notes-ln">
+  <uil-link-alt /> https://www.nodegit.org/api/repository
+</div>
+
+---
+
+# Setup environment: Tools
+
+```js {1-2,9|10-17}
+const Rsync = require("rsync");
+const { rimraf } = require("rimraf");
+
+/* ... */
+
+(async () => {
+  const [oldRev, newRev, ref] = line.split(" ");
+  const repo = await Git.Repository.openBare(repoPath);
+  const rsync = new Rsync();
+  const props = {
+    repo,
+    rsync,
+    ref,
+    rev: newRev,
+    refName: ref.substring(11),
+    revName: newRev.substring(0, 8),
+  };
+
+  console.log(`Working on branch ${ref}`);
+})();
 ```
 
 ---
 
-# Setup environment
+# Work (in) tree
 
-```bash {3|4|6-7|8|3-8}
-#!/bin/bash
+````md magic-move
+```js {5}
+/* ... */
 
-GIT_DIR=`dirname $(cd -- ${0%/*} >/dev/null 2>&1; pwd -P)`
-pushd $GIT_DIR >/dev/null
-
-DEPLOY_DIR=`git config --local dirs.deploy`
-echo "Deploy branches to ${DEPLOY_DIR:=$(dirname $GIT_DIR)/www}"
-mkdir -p $DEPLOY_DIR
-
-while read oldrev newrev ref
-  ...
+(async () => {
+  /* ... */
+  const worktree = await buildWorktree(props);
+})();
 ```
-
----
-
-# Setup branch
-
-```bash {6-9|8|9|6-9}
-...
-while read oldrev newrev ref
-do
-	echo "Working on branch ${ref}"
-
-	REF_NAME=${ref:10}                 # remove `refs/heads`
-	REV_NAME=${newrev:0:8}             # 8 chars commit ID
-	WORK_DIR=`mktemp -d`
-	PROD_LNK=${DEPLOY_DIR}${REF_NAME}  # Human-readable path
-...
+```js {1-2,7|3,6|4-5}
+async function buildWorktree({ repo: bareRepo, rev, ref, revName }) {
+  const workingDir = path.join(os.tmpdir(), `git.${revName}`);
+  const worktree = await Git.Worktree.add(bareRepo, rev, workingDir);
+  const repo = await Git.Repository.open(workingDir);
+  await repo.checkoutBranch(ref);
+  return worktree;
+}
 ```
-
----
-
-# Checkout the Worktree
-
-```bash {7-8}
-while read oldrev newrev ref
-do
-  ...
-	WORK_DIR=`mktemp -d`
-  ...
-  
-	git worktree add $WORK_DIR $ref
-	pushd $WORK_DIR >/dev/null
-	...
-```
+````
 
 ---
 
 # Build
 
-```bash {4|5|7|8|4-9}
-while read oldrev newrev ref
-do
-  ...
-	BUILD_DIR="/$(git config --local dirs.build)"
-	if test -f "./package.json"
-	then
-		test -f "./package-lock.json" && npm install-clean || npm install
-		npm run build --if-present
-	fi
+````md magic-move
+```js {1,7}
+async function buildWorktree({ repo: bareRepo, rev, ref, revName }) {
+  const workingDir = path.join(os.tmpdir(), `git.${revName}`);
+  const worktree = await Git.Worktree.add(bareRepo, rev, workingDir);
+  const repo = await Git.Repository.open(workingDir);
+  await repo.checkoutBranch(ref);
+  return worktree;
+}
 ```
+```js {1,6,8}
+async function buildWorktree({ repo: bareRepo, rev, ref, revName }) {
+  const workingDir = path.join(os.tmpdir(), `git.${revName}`);
+  const worktree = await Git.Worktree.add(bareRepo, rev, workingDir);
+  const repo = await Git.Repository.open(workingDir);
+  await repo.checkoutBranch(ref);
+  await _build(workingDir);
+  return worktree;
+}
+```
+```js {1,15|2-3,12-14|4|5-6,8,10|7|9|11}
+async function _build(workingDir) {
+  try {
+    await fs.access(path.resolve(workingDir, "package.json"));
+    const npm = `npm --prefix ${workingDir}`;
+    try {
+      fs.access(path.resolve(workingDir, "package-lock.json"));
+      await _run(`${npm} install-clean`);
+    } catch {
+      await _run(`${npm} install`);
+    }
+    await _run(`${npm} run build --if-present`);
+  } catch {
+    /* No package.json found, abort build */
+  }
+}
+```
+```js {1,8|2-4|5-6|7}
+async function _run(cmd) {
+  const child = exec(cmd, (err) => {
+    if (err) console.error(err);
+  });
+  child.stderr.pipe(process.stderr);
+  child.stdout.pipe(process.stdout);
+  await new Promise((resolve) => child.on("close", resolve));
+}
+
+```
+````
+
+---
+
+# Deploy
+
+````md magic-move
+```js {4}
+(async () => {
+  /* ... */
+  const worktree = await buildWorktree(props);
+  const appPath = await deployWorktree({ ...props, worktree });
+})();
+```
+```js {1,7-8|2}
+async function deployWorktree({ repo, worktree, rsync, rev, refName, revName }) {
+  const deployRoot = await setupDeployDir(arguments[0]);
+  const appPath = path.resolve(deployRoot, refName);
+
+  /* Deploy logic here... */
+  
+  return appPath;
+}
+```
+```js {1,5-6|2}
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  const deployRoot = await _mkDeployDir(arguments[0]);
+  const deployDir = path.resolve(deployRoot, rev);
+
+  return deployRoot;
+}
+```
+````
+
+---
+layout: image-right
+image: https://i.giphy.com/l4Jz3a8jO92crUlWM.webp
+---
+
+# <uil-cog /> Extend Convention
+
+**[SSH]** `/var/repo`
+
+````md magic-move {lines:false}
+```sh
+$ git config --local --list
+```
+```sh
+$ git config --local --list
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=true
+core.ignorecase=true
+core.precomposeunicode=true
+```
+```sh
+$ git config --local dirs.deploy
+```
+```sh
+$ git config --local dirs.deploy /var/www/prod
+```
+```sh
+$ git config --local --get dirs.build
+/var/www/prod
+```
+````
+
+---
+
+# Setup Deploy Env
+
+````md magic-move
+```js {2}
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  const deployRoot = await _mkDeployDir(arguments[0]);
+  const deployDir = path.resolve(deployRoot, rev);
+
+  return deployRoot;
+}
+```
+```js {1,14|2,4,6|2,4,8|10|12-13}
+async function _mkDeployDir({ repo }) {
+  const repoConfig = await repo.config();
+
+  let deployDir;
+  try {
+    deployDir = (await repoConfig.getEntry("dirs.deploy")).value();
+  } catch {
+    deployDir = path.resolve(repoPath, "../www");
+  }
+  await fs.mkdir(deployDir, { recursive: true });
+
+  console.log(`Deploy branches to ${deployDir}`);
+  return deployDir;
+}
+```
+```js
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  const deployRoot = await _mkDeployDir(arguments[0]);
+  const deployDir = path.resolve(deployRoot, rev);
+
+  return deployRoot;
+}
+```
+````
+
+---
+
+# <uil-comment-info /> Git Common Ancestor
+
+````md magic-move {lines:false}
+```md
+`git merge-base A B`
+
+     o---o---o---B
+    /
+---X---1---o---o---o---A
+```
+```md
+`git merge-base A C`
+
+       o---o---o---o---C
+      /
+     /   o---o---o---B
+    /   /
+---X---o---o---o---o---A
+```
+```md
+`git merge-base A B C`
+
+       o---o---o---o---C
+      /
+     /   o---o---o---B
+    /   /
+---o---X---o---o---o---A
+```
+```md
+`git merge-base A (B C) M`
+
+       o---o---o---o---o
+      /                 \
+     /   o---o---o---o---M
+    /   /
+---o---X---o---o---o---A
+```
+````
+
+<v-clicks class="mt-4xl">
+
+1. Find all branches tips
+2. Get merge base commits
+2. Iterate over history revisions list from current branch tip
+3. If a commit is a merge base: <twemoji-party-popper />
+
+</v-clicks>
+
+<div class="notes-ln">
+  <uil-link-alt /> https://git-scm.com/docs/git-merge-base#_discussion
+</div>
+
+---
+
+# Find merge-base commit
+
+````md magic-move
+```js {1,6}
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  const deployRoot = await _mkDeployDir(arguments[0]);
+  const deployDir = path.resolve(deployRoot, rev);
+
+  return deployRoot;
+}
+```
+```js {4}
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  /* ... */
+
+  const bases = await findMergeBases(arguments[0]);
+
+}
+```
+```js {1,17|2,8|2-8|10|11-12,15-16|13|14}
+async function findMergeBases({ repo, ref }) {
+  const refs = (await repo.getReferences()).filter((ref) => {
+    try {
+      Git.Oid.fromString(ref.name().replace(/^refs\/heads\//, ""));
+    } catch {
+      return true;
+    }
+  });
+
+  const refCommit = await repo.getBranchCommit(ref);
+  return await Promise.all(
+    refs.map(async (tip) => {
+      const tipCommit = await repo.getReferenceCommit(tip);
+      return await Git.Merge.base(repo, tipCommit.id(), refCommit.id());
+    }),
+  );
+}
+```
+```js
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  /* ... */
+
+  const bases = await findMergeBases(arguments[0]);
+
+}
+```
+```js
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  /* ... */
+
+  const bases = await findMergeBases(arguments[0]);
+  const refCommit = await repo.getBranchCommit(ref);
+  const revisions = refCommit.history();
+
+}
+```
+```js {5,20|6,16|7-9|11-12|18|19}
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  /* ... */
+  const revisions = refCommit.history();
+
+  const baseCommit = await new Promise((resolve) => {
+    revisions.on("commit", async (commit) => {
+      const isBase = bases.find((baseOid) => baseOid.equal(commit.id()));
+
+      if (!isBase) return;
+      try {
+        await fs.access(path.resolve(deployRoot, commit.id().tostrS()));
+        resolve(commit.id());
+      } catch {
+        /* Deploy base doesn't exist for this commit, continue... */
+      }
+    });
+
+    revisions.on("end", () => resolve(false));
+    revisions.start();
+  });
+}
+```
+````
 
 ---
 
@@ -367,103 +827,264 @@ do
 > This way the hard link gets all the attributes of the original file and points to the same data block
 > as the original file.
 
-<div class="flex items-center gap-1 mt-6xl">
+<div class="notes-ln">
   <uil-link-alt /> https://linuxhandbook.com/hard-link/
 </div>
 
 ---
 
-# <uil-comment-info /> Git Common Ancestor
-
-```txt
-         o---B2 (feat/B2)
-        /
----o---o---B1--o---o---o---B (main)
-    \                   \
-     B0                  C0'--C1'--C' (feat/C) (rebased)
-      \
-       C0---C1---C (~~feat/C~~) (old)
-             \
-              D0---D1 (fix/D)
-```
-
-<v-clicks class="mt-4xl">
-
-1. Get the revisions list
-2. Iterate to find a valid ancestor
-3. Confirm this commit is a tip of a branch
-
-</v-clicks>
-
----
-
-# Find the Common Ancestor
-
-```bash {6|7-8,14|9|11|13|16|18-19|6-20}
-while read oldrev newrev ref
-do
-  ...
-	pushd $WORK_DIR >/dev/null
-
-	revlist=(`git rev-list $ref main`)
-	for rev in ${revlist[@]:1}
-	do
-		if git merge-base --is-ancestor $rev $ref
-		then
-			grep -r $rev refs/heads/* >/dev/null && test -d ${DEPLOY_DIR}/${rev} && break
-		fi
-		unset rev
-	done
-  
-	if [[ -n $rev ]]
-	then
-		echo "Found deploy-base commit ${rev:0:8}"
-		rsync_opts="--link-dest ${DEPLOY_DIR}/${rev}"
-	fi
-  ...
-```
-
----
-
 # Deploy
 
-```bash {4-5}
-while read oldrev newrev ref
-do
-  ...
-	echo "Deploying ${SRC_DIR:=${WORK_DIR}${BUILD_DIR%/}} -> ${DST_DIR:=${DEPLOY_DIR}/${newrev}}"
-	rsync -a --no-times --exclude '.git' --checksum ${rsync_opts[@]} ${SRC_DIR}/ ${DST_DIR}/
+````md magic-move
+```js
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  /* ... */
+
+  const baseCommit = await new Promise((resolve) => {
+    /* ... */
+  });
+
+}
 ```
+```js {7-13|12}
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  /* ... */
+
+  const baseCommit = await new Promise((resolve) => {
+    /* ... */
+  });
+
+  if (baseCommit) {
+    console.log(
+      `Found deploy-base commit ${baseCommit.tostrS().substring(0, 8)}`,
+    );
+    rsync.set("link-dest", path.resolve(deployRoot, baseCommit.tostrS()));
+  }
+}
+```
+```js {2,13}
+async function setupDeployDir({ repo, rsync, ref, rev }) {
+  const deployDir = path.resolve(deployRoot, rev);
+
+  /* ... */
+
+  if (baseCommit) {
+    console.log(
+      `Found deploy-base commit ${baseCommit.tostrS().substring(0, 8)}`,
+    );
+    rsync.set("link-dest", path.resolve(deployRoot, baseCommit.tostrS()));
+  }
+
+  rsync.destination(deployDir + path.sep);
+  return deployRoot;
+}
+```
+````
+
+---
+
+# Publish !
+
+````md magic-move
+```js {1,8}
+async function deployWorktree({ repo, worktree, rsync, rev, refName, revName }) {
+  const deployRoot = await setupDeployDir(arguments[0]);
+  const appPath = path.resolve(deployRoot, refName);
+
+  /* Deploy logic here... */
+
+  return appPath;
+}
+```
+```js {4,9|5,7-10,12}
+async function deployWorktree({ repo, worktree, rsync, rev, refName, revName }) {
+  /* ... */
+  
+  const repoConfig = await repo.config();
+  let buildDir;
+  try {
+    buildDir = path.resolve(
+      worktree.path(),
+      (await repoConfig.getEntry("dirs.build")).value(),
+    );
+  } catch {
+    buildDir = path.resolve(worktree.path());
+  }
+  
+  return appPath;
+}
+```
+```js {4-9,13|12-14,17}
+async function deployWorktree({ repo, worktree, rsync, rev, refName, revName }) {
+  /* ... */
+
+  rsync
+    .set("archive")
+    .set("no-times")
+    .set("checksum")
+    .exclude([".git"])
+    .source(buildDir + path.sep);
+
+  try {
+    await new Promise((resolve, reject) =>
+      rsync.execute((err, code) => (err ? reject(err) : resolve(code))),
+    );
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+
+  return appPath;
+}
+```
+```js {4|6|10-11|13}
+async function deployWorktree({ repo, worktree, rsync, rev, refName, revName }) {
+  /* ... */
+
+  console.log(`Linking ${refName} -> ${revName}`);
+  try {
+    await fs.unlink(appPath);
+  } catch {
+    /* No previous version to unlink, continue... */
+  }
+  await fs.mkdir(path.dirname(appPath), { recursive: true });
+  await fs.symlink(rsync.destination(), appPath);
+
+  return appPath;
+}
+```
+````
+
 
 ---
 
 # Clean
 
-```bash {4|5|4-5}
-while read oldrev newrev ref
-do
-  ...
-	popd >/dev/null
-	git worktree remove $WORK_DIR
+````md magic-move
+```js {1,7}
+(async () => {
+  /* ... */
+
+  const worktree = await buildWorktree(props);
+  const appPath = await deployWorktree({ ...props, worktree });
+
+})();
 ```
+```js {5,8-10}
+(async () => {
+  /* ... */
+
+  let worktree, appPath;
+  try {
+    worktree = await buildWorktree(props);
+    appPath = await deployWorktree({ ...props, worktree });
+  } finally {
+    await clean({ ...props, worktree });
+  }
+
+})();
+```
+```js
+async function clean({ worktree }) {
+  await rimraf(worktree.path());
+  worktree.prune();
+}
+
+```
+````
 
 ---
 
-# Publish
+# SIGHUP
 
-```bash {4|5|6|4-6|9|10|8,11|8-11|4-11}
-while read oldrev newrev ref
-do
-  ...
-	echo "Linking ${REF_NAME} -> ${REV_NAME}"
-	mkdir -p ${PROD_LNK%/*}
-	ln -sfn ${DST_DIR%/} $PROD_LNK
+<p v-click="3" class="text-sm">
+(for demo's sake)
+</p>
 
-	port=$(expr 8000 + $RANDOM % 100)
-	echo "Restarting app -> http://localhost:${port}"
-	pkill -lf $PROD_LNK >/dev/null 2>&1
-	(nohup npx -y serve -nSL -p $port "${PROD_LNK}" > /dev/null 2>&1 & disown)
+````md magic-move
+```js {7}
+(async () => {
+  /* ... */
+
+  let worktree, appPath;
+  try {
+    worktree = await buildWorktree(props);
+    appPath = await deployWorktree({ ...props, worktree });
+  } finally {
+    await clean({ ...props, worktree });
+  }
+
+})();
 ```
+```js {9-11}
+(async () => {
+  /* ... */
+
+  let worktree, appPath;
+  try {
+    worktree = await buildWorktree(props);
+    appPath = await deployWorktree({ ...props, worktree });
+
+    if (appPath) {
+      await triggerRestart({ ...props, appPath });
+    }
+  } finally {
+    await clean({ ...props, worktree });
+  }
+
+})();
+```
+```js {1,13|2|3-12}
+async function triggerRestart({ appPath }) {
+  const port = Math.floor(Math.random() * 1000) + 8000;
+  const ip = await new Promise((resolve) => {
+    const nets = os.networkInterfaces();
+    for (const inet in nets) {
+      for (const net of nets[inet]) {
+        if (["IPv4", 4].includes(net.family) && !net.internal) {
+          resolve(net.address);
+        }
+      }
+    }
+  });
+}
+```
+```js {4|5-7}
+async function triggerRestart({ appPath }) {
+  /* ... */
+  
+  const psList = (await import("ps-list")).default;
+  (await psList())
+    .filter((process) => process.cmd.includes(appPath))
+    .map(({ pid }) => process.kill(pid));
+}
+```
+```js {4-9}
+async function triggerRestart({ appPath }) {
+  /* ... */
+  
+  console.log(`Restarting app -> http://${ip}:${port}`);
+  const server = spawn(
+    "npx",
+    ["-y", "serve", "-nSL", "-l", `tcp://${ip}:${port}`, appPath],
+    { detached: true, stdio: "ignore" },
+  );
+}
+```
+```js {8,10}
+async function triggerRestart({ appPath }) {
+  /* ... */
+  
+  console.log(`Restarting app -> http://${ip}:${port}`);
+  const server = spawn(
+    "npx",
+    ["-y", "serve", "-nSL", "-l", `tcp://${ip}:${port}`, appPath],
+    { detached: true, stdio: "ignore" },
+  );
+  server.unref();
+}
+```
+````
 
 ---
 layout: section
@@ -521,17 +1142,44 @@ To container:/var/repo
 layout: center
 ---
 
-# <twemoji-party-popper class="animate-bounce" /> In code <strong><L60</strong>!
+# **Show** Time !
 
 ---
 layout: center
+---
+
+# <twemoji-party-popper class="animate-bounce" /> <span v-click.hide="1">In code <b><L240</b>!</span><span v-click="1">In code <b><L60</b><sup>*</sup>!</span>
+
+<p v-click="1"><sup>*</sup> in Bash</p>
+
+<style>
+h1 {
+  @apply !grid grid-rows-1 gap-3;
+  grid-template-columns: auto 1fr;
+
+  &::before {
+    @apply !m-0;
+  }
+
+  span {
+    @apply: relative col-start-2 row-start-1;
+  }
+}
+
+p {
+  @apply w-full text-right !text-sm italic;
+}
+</style>
+
+---
+layout: section
 ---
 
 # **Real** Use-cases
 
 ---
 layout: image-right
-image: https://source.unsplash.com/nlKFtadpueY/1080x1920
+image: https://images.pexels.com/photos/2111759/pexels-photo-2111759.jpeg?auto=compress&w=960&h=1080&dpr=1
 ---
 
 # API Calls
@@ -543,26 +1191,49 @@ image: https://source.unsplash.com/nlKFtadpueY/1080x1920
 - _etc_
 
 ---
+layout: center
+---
 
 # WebHooks?
 
-Automating push from `origin` to `deploy`
+<p>
 
-<div class="flex items-center gap-1 mt-6xl">
+<uil-rocket /> Automating push from `origin` to `deploy`
+
+</p>
+
+<div class="notes-ln">
   <uil-link-alt /> https://blog.alwaysdata.com/2023/02/01/devops-react-we-can-be-heroes-just-for-one-app/
 </div>
 
 ---
 layout: image-right
-image: https://source.unsplash.com/_kdTyfnUFAc/1080x1920
+image: https://images.pexels.com/photos/994747/pexels-photo-994747.jpeg?auto=compress&w=960&h=1080&dpr=1
+class: icons
 ---
 
-# Tips
+# <uil-code-branch /> Tips
 
-- Keep It Simple 'n Stupid
-- Use `git config` a lot
-- Abstract API calls
-- Use Nodejs / Deno as a build system
+- <uil-lightbulb-alt /> Keep It Simple 'n Stupid
+- <uil-cog /> Use `git config` a lot
+- <uil-megaphone /> Abstract API calls
+- <uil-expand-alt /> Expand your build system
+
+---
+layout: cover
+background: https://images.pexels.com/photos/97824/pexels-photo-97824.jpeg?auto=compress&w=1920&h=1080&dpr=1
+---
+
+# Questions ?
+
+<style>
+h1 {
+  --slidev-theme-cover-headingColor: var(--slidev-theme-accents-vulcan);
+  --slidev-theme-cover-headingBg: var(--slidev-theme-accents-lightblue);
+
+  @apply !text-4xl;
+}
+</style>
 
 ---
 layout: center
